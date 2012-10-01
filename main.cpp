@@ -4,6 +4,7 @@
 #include <set>
 #include <algorithm>
 inline int GetMinSet(std::set<int> &a); 
+inline void Destruct(loop **a, int b);
 int main(){
   loop **loops;
   int VaLoops, ValElemLoops;//кол-во циклов и элементов в цикле (в каждом)
@@ -51,6 +52,24 @@ int main(){
     std::cout<<") ";
   }
   std::cout<<"=";
+  bool test=true;
+  for(int i=0;i<VaLoops;i++){
+     for(int j=0;j<ind.at(i);j++){
+	for(int k=0;k<ind.at(i);k++){
+	 if(loops[i][j].value==loops[i][k].value && j!=k){
+		 std::cout<<"\nЦикл не может содержать повторные эл-ты\n";
+		 test =false;
+	 }
+	}
+     }
+  }
+  if (!test){
+	  std::cout<<"\nПрограмма завершилась с ошибкой!\n";
+	  Destruct(loops,VaLoops);
+	    return 1;
+  }
+
+
 
   //Процедура умножения и вывода данных
   while(values.size()!=0){
@@ -82,13 +101,20 @@ int main(){
 std::cout<<")\n";
  //конец
 
- for(int i=0;i<VaLoops;i++){
-    delete[] loops[i];
-  }
-  delete[] loops;
+Destruct(loops,VaLoops);
+
   return 0;
 }
 
 int GetMinSet(std::set<int> &a){
   return *std::min_element(a.begin(), a.end());
 }
+
+void Destruct(loop **a, int b){
+for(int i=0;i<b;i++){
+   delete[] a[i];
+	      }
+  delete[] a;
+}
+
+

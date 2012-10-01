@@ -3,6 +3,7 @@
 struct loop{
   loop *pred;
   loop *next;
+  int value;
   loop();
   ~loop();
 };
